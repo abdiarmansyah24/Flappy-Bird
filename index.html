@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Flappy Bird Original Arcade</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+  <div id="game-container">
+    <!-- Canvas Utama Permainan -->
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- Overlay UI HUD (Saat Bermain) -->
+    <div id="hud-layer" class="ui-layer hidden">
+      <div class="hud-top">
+        <div class="score-badge">
+          <span class="hud-label">SCORE</span>
+          <span id="current-score">0</span>
+        </div>
+        
+        <div class="hud-buttons">
+          <button id="btn-sound-hud" class="icon-btn" aria-label="Toggle Sound">🔊</button>
+          <button id="btn-pause" class="icon-btn" aria-label="Pause Game">⏸️</button>
+        </div>
+      </div>
+      <div class="hud-target">TARGET: <span id="target-score-display">20</span></div>
+    </div>
+
+    <!-- Screen 1: MENU UTAMA -->
+    <div id="menu-screen" class="ui-layer active">
+      <div class="glass-card menu-card">
+        <div class="logo-box">
+          <div class="bird-logo-avatar"></div>
+          <h1 class="game-title">NEON FLAPPY</h1>
+          <p class="game-subtitle">Petualangan Terbang Garis Depan</p>
+        </div>
+
+        <div class="menu-actions">
+          <button id="btn-start" class="btn btn-primary pulse-anim">🎮 MULAI MAIN</button>
+          <button id="btn-how" class="btn btn-secondary">❓ CARA BERMAIN</button>
+          <button id="btn-sound-menu" class="btn btn-utility">🔊 SUARA: ON</button>
+        </div>
+
+        <div class="high-score-pill">
+          🏆 HIGH SCORE: <span id="menu-high-score">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 2: MODAL CARA BERMAIN -->
+    <div id="how-screen" class="ui-layer hidden">
+      <div class="glass-card modal-card">
+        <h2>📖 CARA BERMAIN</h2>
+        <div class="instructions-list">
+          <div class="instruction-item">
+            <span class="icon">📱</span>
+            <div>
+              <strong>Layar Sentuh / HP:</strong>
+              <p>Tap layar di mana saja untuk membuat burung kepakkan sayap & terbang.</p>
+            </div>
+          </div>
+          <div class="instruction-item">
+            <span class="icon">💻</span>
+            <div>
+              <strong>Komputer / Laptop:</strong>
+              <p>Tekan tombol <strong>SPACE</strong> atau <strong>Klik Mouse</strong> untuk melompat.</p>
+            </div>
+          </div>
+          <div class="instruction-item">
+            <span class="icon">⚡</span>
+            <div>
+              <strong>Tantangan & Target:</strong>
+              <p>Hindari tiang energi! Lewati <strong>20 Rintangan</strong> untuk menang!</p>
+            </div>
+          </div>
+        </div>
+        <button id="btn-back-menu" class="btn btn-primary">◀️ KEMBALI KE MENU</button>
+      </div>
+    </div>
+
+    <!-- Screen 3: OVERLAY PAUSE -->
+    <div id="pause-screen" class="ui-layer hidden">
+      <div class="glass-card pause-card">
+        <h2 class="glow-title">⏸️ PAUSED</h2>
+        <p>Permainan Ditahan Sejenak</p>
+        <div class="menu-actions">
+          <button id="btn-resume" class="btn btn-primary">▶️ LANJUTKAN</button>
+          <button id="btn-restart-pause" class="btn btn-secondary">🔄 ULANGI</button>
+          <button id="btn-main-menu-pause" class="btn btn-danger">🏠 MENU UTAMA</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 4: GAME OVER -->
+    <div id="gameover-screen" class="ui-layer hidden">
+      <div class="glass-card result-card gameover-card">
+        <h2 class="result-title text-danger">💥 GAME OVER</h2>
+        <p class="result-subtitle">Burung menabrak rintangan!</p>
+
+        <div class="score-board">
+          <div class="score-box">
+            <span class="score-label">SKOR ANDA</span>
+            <span id="gameover-score" class="score-val">0</span>
+          </div>
+          <div class="score-box highlight">
+            <span class="score-label">HIGH SCORE</span>
+            <span id="gameover-high-score" class="score-val">0</span>
+          </div>
+        </div>
+
+        <div id="new-high-badge" class="badge-new hidden">🎉 HIGH SCORE BARU!</div>
+
+        <div class="menu-actions">
+          <button id="btn-restart-gameover" class="btn btn-primary pulse-anim">🔄 MAIN LAGI</button>
+          <button id="btn-main-menu-gameover" class="btn btn-secondary">🏠 MENU UTAMA</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 5: VICTORY -->
+    <div id="victory-screen" class="ui-layer hidden">
+      <div class="glass-card result-card victory-card">
+        <div class="trophy-icon">🏆</div>
+        <h2 class="result-title text-victory">VICTORY!</h2>
+        <p class="result-subtitle">HEBAT! Kamu Berhasil Mencapai Target!</p>
+
+        <div class="score-board">
+          <div class="score-box">
+            <span class="score-label">SKOR AKHIR</span>
+            <span id="victory-score" class="score-val">20</span>
+          </div>
+          <div class="score-box highlight">
+            <span class="score-label">HIGH SCORE</span>
+            <span id="victory-high-score" class="score-val">20</span>
+          </div>
+        </div>
+
+        <div class="menu-actions">
+          <button id="btn-restart-victory" class="btn btn-primary pulse-anim">🚀 MAIN LAGI</button>
+          <button id="btn-main-menu-victory" class="btn btn-secondary">🏠 MENU UTAMA</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>

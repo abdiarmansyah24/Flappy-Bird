@@ -62,10 +62,10 @@ const btnSoundHud = document.getElementById('btn-sound-hud');
 let currentScore = 0;
 let lastTime = 0;
 
-// Gravitasi & Lompatan
-const GRAVITY = 0.45;
-const FLAP_FORCE = -8.2;
-const MAX_FALL_SPEED = 10;
+// Gravitasi & Lompatan (Dibuat Lebih Mudah)
+const GRAVITY = 0.35;
+const FLAP_FORCE = -6.8;
+const MAX_FALL_SPEED = 8.5;
 
 // Burung (Bird Object)
 const bird = {
@@ -87,7 +87,7 @@ let bgStars = [];
 
 // Timers & Spawning
 let obstacleTimer = 0;
-let obstacleSpawnInterval = 110; // Frames
+let obstacleSpawnInterval = 135; // Frames (Jarak antar rintangan lebih jauh)
 
 // Ground / Tanah Height
 const GROUND_HEIGHT = 60;
@@ -369,18 +369,18 @@ function createVictoryConfetti() {
 // --------------------------------------------------------------------------
 
 function getGameSpeed() {
-  // Kecepatan bertambah seiring peningkatan score
-  if (currentScore >= 16) return 3.4;
-  if (currentScore >= 11) return 3.0;
-  if (currentScore >= 6)  return 2.6;
-  return 2.2;
+  // Kecepatan dibuat lebih tenang dan santai
+  if (currentScore >= 16) return 2.5;
+  if (currentScore >= 11) return 2.2;
+  if (currentScore >= 6)  return 2.0;
+  return 1.8;
 }
 
 function getObstacleGap() {
-  // Celah obstacle sedikit mengecil pada score tinggi (tetap fair)
-  if (currentScore >= 15) return 115;
-  if (currentScore >= 8)  return 125;
-  return 135;
+  // Celah rintangan dibuat jauh lebih lebar agar mudah dilewati
+  if (currentScore >= 15) return 145;
+  if (currentScore >= 8)  return 155;
+  return 165;
 }
 
 function initGame() {
@@ -503,8 +503,8 @@ function triggerVictory() {
 // --------------------------------------------------------------------------
 
 function checkCollision() {
-  // Hitbox burung dibuat sedikit lebih kecil dari visual (Fair Hitbox)
-  const birdHitboxRadius = bird.radius - 3;
+  // Hitbox burung dibuat lebih ramah (Fair & Forgiving Hitbox)
+  const birdHitboxRadius = bird.radius - 6;
 
   // 1. Tabrakan dengan Tanah atau Atas Layar
   if (bird.y + birdHitboxRadius >= V_HEIGHT - GROUND_HEIGHT) {

@@ -7,7 +7,7 @@
 // --------------------------------------------------------------------------
 
 // Target Kemenangan (Dapat diubah dengan mudah)
-const WINNING_SCORE = 20;
+const WINNING_SCORE = 10;
 
 // Game States
 const STATE_MENU = 'MENU';

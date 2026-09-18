@@ -186,10 +186,8 @@ function playSound(type) {
 
 function toggleSound() {
   isSoundMuted = !isSoundMuted;
-  const label = isSoundMuted ? '🔇 SUARA: OFF' : '🔊 SUARA: ON';
-  const icon = isSoundMuted ? '🔇' : '🔊';
-  btnSoundMenu.textContent = label;
-  btnSoundHud.textContent = icon;
+  btnSoundMenu.textContent = isSoundMuted ? 'SUARA: OFF' : 'SUARA: ON';
+  btnSoundHud.textContent = isSoundMuted ? '🔇' : '🔊';
   playSound('button');
 }
 

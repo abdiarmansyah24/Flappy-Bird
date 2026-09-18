@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -12,6 +13,7 @@
 
   <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
 
   <div id="game-container">
@@ -21,9 +23,16 @@
     <!-- Overlay UI HUD (Saat Bermain) -->
     <div id="hud-layer" class="ui-layer hidden">
       <div class="hud-top">
-        <div class="score-badge">
-          <span class="hud-label">SCORE</span>
-          <span id="current-score">0</span>
+        <div class="hud-score-badge">
+          <div class="score-main">
+            <span class="hud-label">SCORE</span>
+            <span id="current-score">0</span>
+          </div>
+          <div class="score-divider"></div>
+          <div class="target-sub">
+            <span class="target-label">TARGET</span>
+            <span id="target-score-display">20</span>
+          </div>
         </div>
         
         <div class="hud-buttons">
@@ -31,7 +40,6 @@
           <button id="btn-pause" class="icon-btn" aria-label="Pause Game">⏸️</button>
         </div>
       </div>
-      <div class="hud-target">TARGET: <span id="target-score-display">20</span></div>
     </div>
 
     <!-- Screen 1: MENU UTAMA -->
@@ -153,4 +161,5 @@
 
   <script src="./script.js"></script>
 </body>
+
 </html>

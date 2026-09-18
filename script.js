@@ -227,9 +227,13 @@ function createBackgroundStars() {
 // 5. KONTROL INPUT (HP TOUCH & LAPTOP KEYBOARD/MOUSE)
 // --------------------------------------------------------------------------
 
-function handleFlap(e) {
-  // Cegah default aksi jika sentuhan di canvas
-  if (e && e.cancelable && e.type === 'touchstart') {
+function handleUserTouch(e) {
+  // Abaikan jika menekan tombol UI
+  if (e.target.closest('button') || e.target.tagName === 'BUTTON') {
+    return;
+  }
+
+  if (e && e.cancelable && (e.type === 'touchstart' || e.type === 'pointerdown')) {
     e.preventDefault();
   }
 
@@ -239,25 +243,26 @@ function handleFlap(e) {
     bird.vy = FLAP_FORCE;
     bird.isFlapping = true;
     playSound('flap');
-
-    // Buat partikel dorongan di belakang burung saat lompat
     createJumpParticles();
   }
 }
 
 function setupInputListeners() {
-  // Mobile / Touch & Mouse Click pada Canvas
-  canvas.addEventListener('touchstart', handleFlap, { passive: false });
-  canvas.addEventListener('mousedown', (e) => {
-    if (e.button === 0) handleFlap(e);
-  });
+  const container = document.getElementById('game-container');
+
+  // Touch & Pointer event di seluruh container agar HP sentuh 100% responsif
+  container.addEventListener('touchstart', handleUserTouch, { passive: false });
+  container.addEventListener('pointerdown', (e) => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    handleUserTouch(e);
+  }, { passive: false });
 
   // Keyboard
   window.addEventListener('keydown', (e) => {
     if (e.code === 'Space' || e.code === 'KeyW' || e.code === 'ArrowUp') {
       if (gameState === STATE_PLAYING) {
         e.preventDefault();
-        handleFlap();
+        handleUserTouch(e);
       } else if (gameState === STATE_MENU) {
         startGame();
       }

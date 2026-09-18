@@ -263,7 +263,7 @@ html, body {
   justify-content: flex-start;
   align-items: stretch;
   padding: 16px;
-
+  pointer-events: none;
 }
 
 .hud-top {
@@ -273,47 +273,71 @@ html, body {
   width: 100%;
 }
 
-.score-badge {
-  background: rgba(13, 17, 23, 0.7);
-  backdrop-filter: blur(8px);
+.hud-score-badge {
+  background: rgba(13, 17, 23, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--glass-border);
-  padding: 6px 16px;
-  border-radius: 12px;
+  padding: 8px 14px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+}
+
+.score-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .hud-label {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 1px;
   color: var(--text-dim);
 }
 
 #current-score {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 900;
   color: var(--primary);
   text-shadow: 0 0 10px var(--primary-glow);
+  line-height: 1;
 }
 
-.hud-target {
-  margin-top: 6px;
-  font-size: 0.75rem;
-  font-weight: 700;
+.score-divider {
+  width: 1px;
+  height: 22px;
+  background: var(--glass-border);
+}
+
+.target-sub {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.1;
+}
+
+.target-label {
+  font-size: 0.62rem;
+  font-weight: 800;
   color: var(--text-dim);
-  text-align: left;
   letter-spacing: 0.5px;
 }
 
 #target-score-display {
+  font-size: 0.95rem;
+  font-weight: 900;
   color: var(--victory);
 }
 
 .hud-buttons {
   display: flex;
   gap: 8px;
+  pointer-events: auto;
 }
 
 .icon-btn {

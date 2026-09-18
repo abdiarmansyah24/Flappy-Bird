@@ -434,9 +434,10 @@ function spawnObstacle() {
   const minTop = 60;
   const maxTop = V_HEIGHT - GROUND_HEIGHT - gap - 60;
   const topHeight = Math.floor(Math.random() * (maxTop - minTop + 1)) + minTop;
+  const renderW = canvas.width && scale ? (canvas.width / scale) : V_WIDTH;
 
   obstacles.push({
-    x: V_WIDTH + 50,
+    x: renderW + 20,
     width: 52,
     topHeight: topHeight,
     bottomY: topHeight + gap,
@@ -644,13 +645,15 @@ function draw() {
   ctx.save();
   ctx.scale(scale, scale);
 
+  const renderW = canvas.width && scale ? (canvas.width / scale) : V_WIDTH;
+
   // 1. Background Gradient Sky
   const skyGrad = ctx.createLinearGradient(0, 0, 0, V_HEIGHT);
   skyGrad.addColorStop(0, '#0a0e17');
   skyGrad.addColorStop(0.7, '#141c2b');
   skyGrad.addColorStop(1, '#1a2436');
   ctx.fillStyle = skyGrad;
-  ctx.fillRect(0, 0, V_WIDTH, V_HEIGHT);
+  ctx.fillRect(0, 0, renderW, V_HEIGHT);
 
   // 2. Stars
   bgStars.forEach(s => {
@@ -688,25 +691,25 @@ function draw() {
   // 4. Ground (Tanah Neon Cyber Grid)
   const groundY = V_HEIGHT - GROUND_HEIGHT;
   ctx.fillStyle = '#0d131f';
-  ctx.fillRect(0, groundY, V_WIDTH, GROUND_HEIGHT);
+  ctx.fillRect(0, groundY, renderW, GROUND_HEIGHT);
 
   // Top Neon Stripe on Ground
   ctx.fillStyle = '#00f2fe';
-  ctx.fillRect(0, groundY, V_WIDTH, 3);
+  ctx.fillRect(0, groundY, renderW, 3);
   ctx.shadowColor = '#00f2fe';
   ctx.shadowBlur = 8;
-  ctx.fillRect(0, groundY, V_WIDTH, 3);
+  ctx.fillRect(0, groundY, renderW, 3);
   ctx.shadowBlur = 0;
 
   // Diagonal Grid Lines on Ground (Clipped to ground area)
   ctx.save();
   ctx.beginPath();
-  ctx.rect(0, groundY, V_WIDTH, GROUND_HEIGHT);
+  ctx.rect(0, groundY, renderW, GROUND_HEIGHT);
   ctx.clip();
 
   ctx.strokeStyle = 'rgba(0, 242, 254, 0.15)';
   ctx.lineWidth = 2;
-  for (let x = -24; x < V_WIDTH + 48; x += 24) {
+  for (let x = -24; x < renderW + 48; x += 24) {
     ctx.beginPath();
     ctx.moveTo(x - groundOffsetX, groundY);
     ctx.lineTo(x - groundOffsetX - 15, V_HEIGHT);

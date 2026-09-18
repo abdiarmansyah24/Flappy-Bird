@@ -698,15 +698,21 @@ function draw() {
   ctx.fillRect(0, groundY, V_WIDTH, 3);
   ctx.shadowBlur = 0;
 
-  // Diagonal Grid Lines on Ground
+  // Diagonal Grid Lines on Ground (Clipped to ground area)
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(0, groundY, V_WIDTH, GROUND_HEIGHT);
+  ctx.clip();
+
   ctx.strokeStyle = 'rgba(0, 242, 254, 0.15)';
   ctx.lineWidth = 2;
-  for (let x = -24; x < V_WIDTH + 24; x += 24) {
+  for (let x = -24; x < V_WIDTH + 48; x += 24) {
     ctx.beginPath();
     ctx.moveTo(x - groundOffsetX, groundY);
     ctx.lineTo(x - groundOffsetX - 15, V_HEIGHT);
     ctx.stroke();
   }
+  ctx.restore();
 
   // 5. Partikel Jump & Ledakan
   particles.forEach(p => {
